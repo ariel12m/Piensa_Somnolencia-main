@@ -1,20 +1,15 @@
 import Navbar from "../components/Navbar";
 import Card from "../components/Card";
 import { useEffect, useState } from "react";
-import { api } from "../api/api";
+import axios from "axios";
 
 export default function History() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 
   async function loadHistory() {
-    const token = localStorage.getItem("token");
-
     try {
-      const res = await api.get("/events/history", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
+      const res = await axios.get("http://localhost:3000/event");
       setHistory(res.data);
     } catch (error) {
       console.error("Error cargando historial", error);
@@ -44,23 +39,33 @@ export default function History() {
               <p className="text-lg">Sin registros aún.</p>
             </div>
           ) : (
-            <ul className="space-y-3">
-              {history.map((event, index) => (
-                <li
-                  key={index}
-                  className="bg-black/30 border border-pink-400/30 rounded-lg p-3 
-                  flex justify-between items-center hover:glow transition"
-                >
-                  <span className="text-pink-300 font-semibold">
-                    {event.type}
-                  </span>
-
-                  <span className="text-gray-400 text-sm">
-                    {new Date(event.createdAt).toLocaleString()}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm text-gray-300 border-collapse">
+                <thead>
+                  <tr className="border-b border-cyan-400/30 bg-black/50">
+                    <th className="px-4 py-3 text-cyan-300 font-semibold">ID</th>
+                    <th className="px-4 py-3 text-cyan-300 font-semibold">Título</th>
+                    <th className="px-4 py-3 text-cyan-300 font-semibold">Descripción</th>
+                    <th className="px-4 py-3 text-cyan-300 font-semibold">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {history.map((event) => (
+                    <tr
+                      key={event.id}
+                      className="border-b border-pink-400/20 hover:bg-black/40 transition"
+                    >
+                      <td className="px-4 py-3 text-pink-300">{event.id}</td>
+                      <td className="px-4 py-3 text-white font-semibold">{event.title}</td>
+                      <td className="px-4 py-3 text-gray-400">{event.description}</td>
+                      <td className="px-4 py-3 text-gray-500 text-xs">
+                        {new Date(event.createdAt).toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </Card>
       </div>
