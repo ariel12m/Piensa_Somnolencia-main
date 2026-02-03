@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import Card from "../components/Card";
 import { useEffect, useState } from "react";
-import { api } from "../api/api";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
@@ -10,14 +10,21 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   async function loadData() {
-    const token = localStorage.getItem("token");
-
     try {
-      const res = await api.get("/events/today", {
-        headers: { Authorization: `Bearer ${token}` },
+      // Obtener todos los eventos del backend
+      const res = await axios.get("http://localhost:3000/event");
+      
+      // Filtrar solo los eventos de hoy
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      const todayEvents = res.data.filter(event => {
+        const eventDate = new Date(event.createdAt);
+        eventDate.setHours(0, 0, 0, 0);
+        return eventDate.getTime() === today.getTime();
       });
 
-      setEvents(res.data);
+      setEvents(todayEvents);
     } catch (error) {
       console.error("Error cargando eventos", error);
     } finally {
@@ -49,21 +56,12 @@ export default function Dashboard() {
         {loading ? (
           <p className="text-center text-gray-500">Cargando datos...</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
-            <Card>
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-6 max-w-4xl mx-auto mb-12">
+            <Card onClick={() => navigate("/events-today")}>
               <h3 className="text-xl font-semibold mb-2 text-[#39ff14]">
                 Eventos hoy
               </h3>
               <p className="text-3xl font-bold">{events.length}</p>
-            </Card>
-
-            <Card>
-              <h3 className="text-xl font-semibold mb-2 text-[#ff44aa]">
-                Estado actual
-              </h3>
-              <p className="text-2xl font-semibold">
-                {events.length > 0 ? "⚠️ Alerta" : "😄 Despierto"}
-              </p>
             </Card>
           </div>
         )}
