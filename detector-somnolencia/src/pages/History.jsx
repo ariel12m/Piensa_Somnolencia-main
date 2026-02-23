@@ -62,7 +62,7 @@ export default function History() {
                         {new Date(event.createdAt).toLocaleString()}
                       </td>
                     </tr>
-                  ))}
+                  ))}el
                 </tbody>
               </table>
             </div>

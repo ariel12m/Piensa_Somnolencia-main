@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/api/api.ts","./src/components/card.jsx","./src/components/navbar.jsx","./src/components/privateroute.jsx","./src/pages/dashboard.jsx","./src/pages/eventstoday.jsx","./src/pages/history.jsx","./src/pages/login.jsx","./src/pages/profile.jsx","./src/pages/register.jsx"],"version":"5.9.3"}

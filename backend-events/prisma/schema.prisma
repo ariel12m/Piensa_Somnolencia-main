@@ -7,13 +7,18 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
+  id              Int      @id @default(autoincrement())
+  name            String
+  email           String   @unique
+  password        String
+  cedula          String?
+  phone           String?
+  address         String?
+  licenseNumber   String?
+  vehicle         String?
+  createdAt       DateTime @default(now())
 
-  events    Event[]
+  events          Event[]
 }
 
 model Event {

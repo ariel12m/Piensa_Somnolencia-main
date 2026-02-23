@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Put, Param, Delete, UseGuards, BadRequestException } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user')
@@ -36,6 +37,12 @@ findOne(@Param('id') id: string) {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Put(':id')
+  updateProfile(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
+    return this.userService.updateProfile(+id, updateProfileDto);
   }
 
   @Delete(':id')

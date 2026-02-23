@@ -86,6 +86,12 @@ let UserService = class UserService {
             },
         });
     }
+    updateProfile(id, updateProfileDto) {
+        return this.prisma.user.update({
+            where: { id },
+            data: updateProfileDto,
+        });
+    }
     remove(id) {
         return this.prisma.user.delete({
             where: { id },

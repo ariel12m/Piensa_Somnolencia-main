@@ -1,6 +1,7 @@
   import { Injectable } from '@nestjs/common';
   import { CreateUserDto } from './dto/create-user.dto';
   import { UpdateUserDto } from './dto/update-user.dto';
+  import { UpdateProfileDto } from './dto/update-profile.dto';
   import { PrismaService } from 'src/prisma/prisma.service';
   import * as bcrypt from 'bcrypt';
 
@@ -46,6 +47,13 @@
           ...updateUserDto,
           events: updateUserDto.events ? { connect: updateUserDto.events.map(id => ({ id })) } : undefined,
         },
+      });
+    }
+
+    updateProfile(id: number, updateProfileDto: UpdateProfileDto) {
+      return this.prisma.user.update({
+        where: { id },
+        data: updateProfileDto,
       });
     }
 

@@ -1,6 +1,7 @@
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
@@ -56,6 +57,13 @@ export declare class UserController {
         createdAt: Date;
     }) | null, null, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
     update(id: string, updateUserDto: UpdateUserDto): import("@prisma/client").Prisma.Prisma__UserClient<{
+        name: string;
+        email: string;
+        password: string;
+        id: number;
+        createdAt: Date;
+    }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
+    updateProfile(id: string, updateProfileDto: UpdateProfileDto): import("@prisma/client").Prisma.Prisma__UserClient<{
         name: string;
         email: string;
         password: string;

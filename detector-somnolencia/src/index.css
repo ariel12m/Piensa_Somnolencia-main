@@ -9,17 +9,22 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-/* TITULOS CON GLOW */
-.glow {
-  text-shadow: 0 0 10px #ff00e1, 0 0 25px #00eaff;
+/* ANIMACIONES */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* INPUTS OSCUROS CON NEÓN */
-.input-neon {
-  @apply bg-[#0b0b18] border-2 border-cyan-400/50 text-white rounded-lg p-3;
-  box-shadow: 0 0 10px #00eaff80;
-  transition: .3s;
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
 }
+
 .input-neon:focus {
   border-color: #ff00e1;
   box-shadow: 0 0 15px #ff00e1;

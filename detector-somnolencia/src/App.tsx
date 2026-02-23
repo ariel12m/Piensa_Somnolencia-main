@@ -1,11 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import EventsToday from "./pages/EventsToday";
-import Profile from "./pages/Profile";
-import History from "./pages/History";
 
 import PrivateRoute from "./components/PrivateRoute.jsx";
 
@@ -29,32 +26,13 @@ export default function App() {
           }
         />
 
-        <Route
-          path="/events-today"
-          element={
-            <PrivateRoute>
-              <EventsToday />
-            </PrivateRoute>
-          }
-        />
+        {/* Redirecciones de rutas antiguas al dashboard */}
+        <Route path="/events-today" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/history" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/profile" element={<Navigate to="/dashboard" replace />} />
 
-        <Route
-          path="/history"
-          element={
-            <PrivateRoute>
-              <History />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-        />
+        {/* Ruta por defecto */}
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </BrowserRouter>
   );
